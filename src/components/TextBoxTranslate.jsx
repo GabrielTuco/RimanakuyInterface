@@ -1,8 +1,9 @@
 import { Check, ContentCopy } from '@mui/icons-material'
-import { Button, Divider, IconButton, Stack, TextField, Tooltip, Typography, colors } from '@mui/material'
+import { Button, Divider, IconButton, Stack, TextField, Tooltip, Typography, colors, useMediaQuery } from '@mui/material'
 import React, { useRef, useState } from 'react'
 import { translate } from '../services/model.service'
 import { Spinner } from './Spinner'
+import { useTheme } from '@emotion/react'
 
 export const TextBoxTranslate = () => {
     const [text1, setText1] = useState('')
@@ -29,6 +30,9 @@ export const TextBoxTranslate = () => {
         }
     }
 
+    const theme = useTheme();
+    const matches = useMediaQuery(theme.breakpoints.up('sm'));
+
     return (
         <Stack sx={{
             flexDirection: 'row',
@@ -42,75 +46,78 @@ export const TextBoxTranslate = () => {
             gap: 2,
 
         }}>
-            {//<Spinner />
+            {
+                matches &&
+                <>
+                    <Stack flex={1} height={'100%'} justifyContent={'flex-start'} >
+                        <Typography sx={{ fontWeight: 'medium', color: 'rgba(112, 34, 44, 1)' }}>Quechua</Typography>
+                        <TextField
+                            inputRef={enlaceRef}
+                            value={text1}
+                            onChange={(e) => { setText1(e.target.value) }}
+                            rows={11}
+                            placeholder='Escribe algo'
+                            InputProps={{
+                                style: {
+                                    padding: 0,
+                                    paddingTop: 15,
+
+                                },
+                            }}
+                            sx={{
+                                flex: 1,
+                                p: 0,
+
+                                "& fieldset": {
+                                    border: 'none',
+                                    p: 0
+                                },
+                            }}
+                            multiline
+                        />
+                        <Button onClick={onTranslate} variant='contained' sx={{ fontWeight: 'normal', fontSize: 14, alignSelf: 'flex-start', borderRadius: 100 }} >Tikray</Button>
+                    </Stack>
+                    <Divider orientation='vertical' sx={{ background: 'white' }} />
+                    <Stack flex={1} height={'100%'} justifyContent={'flex-start'}>
+                        <Typography sx={{ fontWeight: 'medium', color: 'rgba(112, 34, 44, 1)' }}>Español</Typography>
+                        <TextField
+                            value={text2}
+                            rows={11}
+                            InputProps={{
+                                readOnly: true,
+                                style: {
+                                    padding: 0,
+                                    paddingTop: 15,
+
+                                },
+                            }}
+                            sx={{
+                                flex: 1,
+                                p: 0,
+
+                                "& fieldset": {
+                                    border: 'none',
+                                    p: 0
+                                },
+                            }}
+                            multiline
+                        />
+                        <Stack alignSelf={'flex-end'}>
+                            <Tooltip title={enlaceCopiado ? '¡Texto Copiado!' : ''}>
+                                <IconButton onClick={copiarAlPortapapeles}>
+                                    {
+                                        enlaceCopiado ?
+                                            <Check sx={{ height: 20, width: 20 }} /> :
+                                            <ContentCopy color='primary' />
+                                    }
+
+                                </IconButton>
+                            </Tooltip>
+                        </Stack>
+
+                    </Stack>
+                </>
             }
-            <Stack flex={1} height={'100%'} justifyContent={'flex-start'} >
-                <Typography sx={{ fontWeight: 'medium', color: 'rgba(112, 34, 44, 1)' }}>Quechua</Typography>
-                <TextField
-                    inputRef={enlaceRef}
-                    value={text1}
-                    onChange={(e) => { setText1(e.target.value) }}
-                    rows={11}
-                    placeholder='Escribe algo'
-                    InputProps={{
-                        style: {
-                            padding: 0,
-                            paddingTop: 15,
-
-                        },
-                    }}
-                    sx={{
-                        flex: 1,
-                        p: 0,
-
-                        "& fieldset": {
-                            border: 'none',
-                            p: 0
-                        },
-                    }}
-                    multiline
-                />
-                <Button onClick={onTranslate} variant='contained' sx={{ fontWeight: 'normal', fontSize: 14, alignSelf: 'flex-start', borderRadius: 100 }} >Tikray</Button>
-            </Stack>
-            <Divider orientation='vertical' sx={{ background: 'white' }} />
-            <Stack flex={1} height={'100%'} justifyContent={'flex-start'}>
-                <Typography sx={{ fontWeight: 'medium', color: 'rgba(112, 34, 44, 1)' }}>Español</Typography>
-                <TextField
-                    value={text2}
-                    rows={11}
-                    InputProps={{
-                        readOnly: true,
-                        style: {
-                            padding: 0,
-                            paddingTop: 15,
-
-                        },
-                    }}
-                    sx={{
-                        flex: 1,
-                        p: 0,
-
-                        "& fieldset": {
-                            border: 'none',
-                            p: 0
-                        },
-                    }}
-                    multiline
-                />
-                <Stack alignSelf={'flex-end'}>
-                    <Tooltip title={enlaceCopiado ? '¡Texto Copiado!' : ''}>
-                        <IconButton onClick={copiarAlPortapapeles}>
-                            {
-                                enlaceCopiado ?
-                                    <Check sx={{ height: 20, width: 20 }} /> :
-                                    <ContentCopy color='primary' />
-                            }
-
-                        </IconButton>
-                    </Tooltip>
-                </Stack>
-
-            </Stack>
         </Stack >
     )
 }
