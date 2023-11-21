@@ -3,9 +3,9 @@ import { azureApi } from "./config";
 export const translate = async (text) => {
   try {
     const response = await azureApi.post(
-      `/score`,
+      `/translate`,
       {
-        input_data: text,
+        text,
       },
       {}
     );

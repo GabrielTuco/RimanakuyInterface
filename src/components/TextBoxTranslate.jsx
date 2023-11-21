@@ -8,7 +8,9 @@ import { useTheme } from '@emotion/react'
 export const TextBoxTranslate = () => {
     const [text1, setText1] = useState('')
     const [text2, setText2] = useState('')
+    const [loading, setLoading] = useState(false)
     const [enlaceCopiado, setEnlaceCopiado] = useState(false);
+
 
     const enlaceRef = useRef(null);
 
@@ -23,9 +25,11 @@ export const TextBoxTranslate = () => {
     };
 
     const onTranslate = () => {
+        setLoading(true)
         if (text1 != '') {
             translate(text1).then((r) => {
-                setText2(r)
+                setText2(r.tgt)
+                setLoading(false)
             })
         }
     }
@@ -47,12 +51,14 @@ export const TextBoxTranslate = () => {
 
         }}>
             {
+                loading && <Spinner />
+            }
+            {
                 matches &&
                 <>
                     <Stack flex={1} height={'100%'} justifyContent={'flex-start'} >
                         <Typography sx={{ fontWeight: 'medium', color: 'rgba(112, 34, 44, 1)' }}>Quechua</Typography>
                         <TextField
-                            inputRef={enlaceRef}
                             value={text1}
                             onChange={(e) => { setText1(e.target.value) }}
                             rows={11}
@@ -81,6 +87,7 @@ export const TextBoxTranslate = () => {
                     <Stack flex={1} height={'100%'} justifyContent={'flex-start'}>
                         <Typography sx={{ fontWeight: 'medium', color: 'rgba(112, 34, 44, 1)' }}>Español</Typography>
                         <TextField
+                            inputRef={enlaceRef}
                             value={text2}
                             rows={11}
                             InputProps={{

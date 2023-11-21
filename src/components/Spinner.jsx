@@ -1,5 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material'
 import React from 'react'
+import { Comment } from 'react-loader-spinner'
 import { BarLoader } from 'react-spinners'
 
 export const Spinner = () => {
@@ -25,16 +26,15 @@ export const Spinner = () => {
                 position: 'absolute',
                 alignItems: 'center'
             }}>
-                <BarLoader
-                    color="rgba(211, 119, 75, 1)"
-                    loading={true}
-                    height={8}
-                    width={150}
-                    aria-label="Loading Spinner"
-                    data-testid="loader"
-                    cssOverride={{
-                        display: "block",
-                    }}
+                <Comment
+                    visible={true}
+                    height="80"
+                    width="80"
+                    ariaLabel="comment-loading"
+                    wrapperStyle={{}}
+                    wrapperClass="comment-wrapper"
+                    color="#fff"
+                    backgroundColor="rgba(211, 119, 75, 1)"
                 />
                 <Typography variant='h6'>Cargando...</Typography>
             </Stack>
