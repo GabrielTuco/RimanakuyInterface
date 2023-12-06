@@ -129,9 +129,9 @@ export const TextBoxTranslate = () => {
         )
     else
         return (
-            <Stack gap={3} >
+            <Stack gap={3} width={'100%'} >
                 {
-                    !loading && <Spinner />
+                    loading && <Spinner />
                 }
                 <Stack sx={box}>
                     <Stack flex={1} width={'100%'} height={'100%'} justifyContent={'flex-start'} >
