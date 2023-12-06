@@ -12,7 +12,7 @@ export const Home = () => {
             <Stack sx={{ height: '60px', width: '100%', background: 'rgba(211, 119, 75, 1)', alignItems: 'left', justifyContent: 'center' }}>
                 <Logo />
             </Stack>
-            <Stack flex={1} p={3} gap={3}>
+            <Stack flex={1} py={3} px={2} gap={3} width={'100%'} alignItems={'center'}>
                 <BoxLanguages />
                 <TextBoxTranslate />
             </Stack>

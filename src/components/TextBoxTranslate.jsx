@@ -37,24 +37,24 @@ export const TextBoxTranslate = () => {
     const theme = useTheme();
     const matches = useMediaQuery(theme.breakpoints.up('sm'));
 
-    return (
-        <Stack sx={{
-            flexDirection: 'row',
-            borderRadius: '16px',
-            background: 'linear-gradient(0deg, rgba(103, 80, 164, 0.05), rgba(103, 80, 164, 0.05))',
-            linearGradient: '(0deg, #F6F6F6, #F6F6F6)',
-            boxShadow: '0px 1px 3px 1px rgba(0, 0, 0, 0.15)',
-            width: '705px', height: '353px', color: 'black', justifyContent: 'space-evenly', alignItems: 'center',
-            p: 2,
-            boxSizing: 'border-box',
-            gap: 2,
+    if (matches)
+        return (
+            <Stack sx={{
+                flexDirection: matches ? 'row' : 'column',
+                borderRadius: '16px',
+                background: 'linear-gradient(0deg, rgba(103, 80, 164, 0.05), rgba(103, 80, 164, 0.05))',
+                linearGradient: '(0deg, #F6F6F6, #F6F6F6)',
+                boxShadow: '0px 1px 3px 1px rgba(0, 0, 0, 0.15)',
+                width: '705px', height: '353px', color: 'black', justifyContent: 'space-evenly', alignItems: 'center',
+                p: 2,
+                boxSizing: 'border-box',
+                gap: 2,
 
-        }}>
-            {
-                loading && <Spinner />
-            }
-            {
-                matches &&
+            }}>
+                {
+                    loading && <Spinner />
+                }
+
                 <>
                     <Stack flex={1} height={'100%'} justifyContent={'flex-start'} >
                         <Typography sx={{ fontWeight: 'medium', color: 'rgba(112, 34, 44, 1)' }}>Quechua</Typography>
@@ -124,7 +124,104 @@ export const TextBoxTranslate = () => {
 
                     </Stack>
                 </>
-            }
-        </Stack >
-    )
+
+            </Stack >
+        )
+    else
+        return (
+            <Stack gap={3} >
+                {
+                    !loading && <Spinner />
+                }
+                <Stack sx={box}>
+                    <Stack flex={1} width={'100%'} height={'100%'} justifyContent={'flex-start'} >
+                        <Typography sx={{ fontWeight: 'medium', color: 'rgba(112, 34, 44, 1)' }}>Quechua</Typography>
+                        <TextField
+                            value={text1}
+                            onChange={(e) => { setText1(e.target.value) }}
+                            rows={5}
+                            placeholder='Escribe algo'
+                            InputProps={{
+                                style: {
+                                    padding: 0,
+                                    paddingTop: 15,
+
+                                },
+                            }}
+                            sx={{
+                                flex: 1,
+                                p: 0,
+
+                                "& fieldset": {
+                                    border: 'none',
+                                    p: 0
+                                },
+                            }}
+                            multiline
+                        />
+                        <Button onClick={onTranslate} variant='contained' sx={{ fontWeight: 'normal', fontSize: 14, alignSelf: 'flex-start', borderRadius: 100 }} >Tikray</Button>
+                    </Stack>
+
+                </Stack >
+                <Stack sx={box}>
+
+
+
+                    <Stack flex={1} width={'100%'} height={'100%'} justifyContent={'flex-start'}>
+                        <Typography sx={{ fontWeight: 'medium', color: 'rgba(112, 34, 44, 1)' }}>Español</Typography>
+                        <TextField
+                            inputRef={enlaceRef}
+                            value={text2}
+                            rows={5}
+                            InputProps={{
+                                readOnly: true,
+                                style: {
+                                    padding: 0,
+                                    paddingTop: 15,
+
+                                },
+                            }}
+                            sx={{
+                                flex: 1,
+                                p: 0,
+
+                                "& fieldset": {
+                                    border: 'none',
+                                    p: 0
+                                },
+                            }}
+                            multiline
+                        />
+                        <Stack alignSelf={'flex-end'}>
+                            <Tooltip title={enlaceCopiado ? '¡Texto Copiado!' : ''}>
+                                <IconButton onClick={copiarAlPortapapeles}>
+                                    {
+                                        enlaceCopiado ?
+                                            <Check sx={{ height: 20, width: 20 }} /> :
+                                            <ContentCopy color='primary' />
+                                    }
+
+                                </IconButton>
+                            </Tooltip>
+                        </Stack>
+
+                    </Stack>
+
+
+                </Stack >
+            </Stack>
+        )
+
+}
+
+
+const box = {
+    borderRadius: '16px',
+    background: 'linear-gradient(0deg, rgba(103, 80, 164, 0.05), rgba(103, 80, 164, 0.05))',
+    linearGradient: '(0deg, #F6F6F6, #F6F6F6)',
+    boxShadow: '0px 1px 3px 1px rgba(0, 0, 0, 0.15)',
+    color: 'black', justifyContent: 'space-evenly', alignItems: 'center',
+    p: 2,
+    boxSizing: 'border-box',
+    gap: 2,
 }
